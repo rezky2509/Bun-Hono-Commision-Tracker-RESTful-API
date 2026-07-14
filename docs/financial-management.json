@@ -1,0 +1,545 @@
+{
+    "openapi":"3.1.1",
+    "info": {
+      "title":"Financial-Management Commision Tracker",
+      "version":"1.0",
+      "contact": {
+        "name": "Rezky",
+        "email": "rezkydwiafian25@gmail.com"
+      }
+    },
+    "servers": [
+        {
+            "description": "Financial Management RESTful API",
+            "url": "https://{environment}/api/v1",
+            "variables": {
+                "environment":{
+                    "description": "Server Environment",
+                    "default": "development",
+                    "enum": [
+                        "development",
+                        "staging",
+                        "production"
+                    ]
+                }
+            }
+        }
+    ],
+    "externalDocs": {
+        "url": "https://",
+        "description": "External Documentation or Github"
+    },
+    "paths": {
+        "/agents":{
+            "get": {
+                "description": "Get All Current Agent By Descending and Pagination",
+                "summary": "Get All or By Name Agent Pagination",
+                "parameters": [
+                    {
+                        "name":"name",
+                        "in":"query",
+                        "required": false,
+                        "description": "Filter data by name",
+                        "schema":{
+                            "type":"string",
+                            "minLength": 1,
+                            "maxLength": 100
+                        },
+                        "examples":{
+                            "siti":{
+                                "description": "Get name example Siti",
+                                "value":"siti"
+                            },
+                            "Deborah":{
+                                "description": "Get name example Deborah",
+                                "value":"Deborah"
+                            }
+                        }
+                    },
+                    {
+                        "name":"page",
+                        "in":"query",
+                        "required": true,
+                        "description": "Pagination",
+                        "schema":{
+                            "type":"number",
+                            "minLength": 1
+                        },
+                        "examples":{
+                            "1":{
+                                "description": "Get By page 1",
+                                "value":1
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "Succes To Fetch All Data as an array",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items": {
+                                    "type":"object",
+                                    "properties": {
+                                            "full_name":{
+                                                "type":"string"
+                                            },
+                                            "agent_code":{
+                                                "type":"string"
+                                            },
+                                            "team_type":{
+                                                "type":"string",
+                                                "enum": [
+                                                    "Siti",
+                                                    "Fahrul"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "sucess":{
+                                    "description":"Sucess To fetch All agent",
+                                    "value":[
+                                        {
+                                            "full_name":"Deborah",
+                                            "agent_code":"CDGD5435",
+                                            "team_type":"Siti"
+                                        },
+                                        {
+                                            "full_name":"Deborah",
+                                            "agent_code":"CDGD5435",
+                                            "team_type":"Siti"
+                                        }
+                                    ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "No Agent Found Based on Query",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties": {
+                                        "success":{
+                                            "type":"boolean"
+                                        },
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    }
+                                },
+                                
+                                "example":{
+                                    "success":false,
+                                    "message":"Agent not found based on query" 
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post":{
+                "description": "Send Data Only",
+                "summary": "Send somethig to server",
+                "requestBody":{
+                    "required": true,
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties": {
+                                    "name":{
+                                        "type":"string",
+                                        "minLength": 1,
+                                        "required": true
+                                    },
+                                    "listTodo":{
+                                        "type":"string",
+                                        "minLength": 5,
+                                        "required": true
+                                    },
+                                    "priority":{
+                                        "type":"integer",
+                                        "format": "int32",
+                                        "required": true,
+                                        "default":1
+                                    },
+                                    "tags":{
+                                        "type":"array",
+                                        "minLength": 1,
+                                        "items":{
+                                            "type":"string",
+                                            "minLength": 1
+                                        }
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "java":{
+                                    "description": "Example create todo java",
+                                    "value":{
+                                        "name":"Java",
+                                        "priority":3,
+                                        "tags":[
+                                            "Java",
+                                            "Programming"
+                                        ]
+                                    }
+                                },
+                                "php":{
+                                    "description": "Example create todo PHP",
+                                    "value":{
+                                        "name":"PHP",
+                                        "priority":3,
+                                        "tags":[
+                                            "PHP",
+                                            "Programming"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "Success add something",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "type":"object",
+                                        "properties": {
+                                            "id":{
+                                                "type":"string"
+                                            },
+                                            "name":{
+                                                "type":"string"
+                                            },
+                                            "priority":{
+                                                "type":"string"
+                                            },
+                                            "tags":{
+                                                "type":"array",
+                                                "items":{
+                                                    "type":"string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "examples":{
+                                    "java":{
+                                        "description":"Sucess create add java list",
+                                        "value":{
+                                            "id":"1",
+                                            "name":"Java",
+                                            "priority":"3",
+                                            "tags":[
+                                                "Java",
+                                                "Spring"
+                                            ]
+                                        }
+                                    },
+                                    "php":{
+                                        "description": "Sucess create add php",
+                                        "value":{
+                                            "id":"2",
+                                            "name":"PHP",
+                                            "priority":"3",
+                                            "tags":[
+                                                "PHP",
+                                                "Laravel"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sales":{
+            "post":{
+                "description":"Adding new daily sales transaction",
+                "summary":"Add new sales transaction",
+                "requestBody":{
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties": {
+                                    "agent_code":{
+                                        "type":"string",
+                                        "minLength": 1,
+                                        "required": true
+                                    },
+                                    "agent_name":{
+                                        "type":"string",
+                                        "minLength": 1,
+                                        "required": true
+                                    },
+                                    "student_name":{
+                                        "type":"string",
+                                        "minLength":1,
+                                        "required":true
+                                    },
+                                    "transaction_date":{
+                                        "type":"string",
+                                        "required":true
+                                    },
+                                    "target_account":{
+                                        "type":"string",
+                                        "required": true
+                                    },
+                                    "gross_payment":{
+                                        "type":"number",
+                                        "minLength": 1,
+                                        "required": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "Success Adding Transaction",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "description": "Successfully added transaction",
+                                    "properties": {
+                                        "success":{
+                                            "type":"boolean"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/enpoint/{params}":{
+            "delete": {
+                "description": "Delete Data based params",
+                "summary": "Delete based on params",
+                "parameters": [
+                    {
+                        "name":"params",
+                        "in":"path",
+                        "required": true,
+                        "description": "Deletd based on params or path",
+                        "schema":{
+                            "type":"string",
+                            "minLength": 1,
+                            "maxLength": 100
+                        }
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "Sucess Delete",
+                        "content": {
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "description":"Sucess to delete",
+                                "properties": {
+                                    "success":{
+                                        "type":"boolean"
+                                    }
+                                }
+                            },
+                            "examples":{
+                                "success":{
+                                    "description": "Success when delete",
+                                    "value":{
+                                        "success":true
+                                    }
+                                }
+                            }
+                        }
+                        }
+                    },
+                    "404":{
+                        "description": "Fail Delete Not Found",
+                        "content": {
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "description":"Sucess to delete",
+                                "properties": {
+                                    "success":{
+                                        "type":"boolean"
+                                    }
+                                }
+                            },
+                            "examples":{
+                                "Failed":{
+                                    "description": "Fail when delete",
+                                    "value":{
+                                        "success":false
+                                    }
+                                }
+                            }
+                        }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Changes Data based on params",
+                "summary": "Update data",
+                "responses": {
+                    "200":{
+                        "description": "Success Update something",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "type":"object",
+                                        "properties": {
+                                            "id":{
+                                                "type":"string"
+                                            },
+                                            "name":{
+                                                "type":"string"
+                                            },
+                                            "priority":{
+                                                "type":"string"
+                                            },
+                                            "tags":{
+                                                "type":"array",
+                                                "items":{
+                                                    "type":"string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "examples":{
+                                    "java":{
+                                        "description":"Sucess create add java list",
+                                        "value":{
+                                            "id":"1",
+                                            "name":"Java",
+                                            "priority":"3",
+                                            "tags":[
+                                                "Java",
+                                                "Spring"
+                                            ]
+                                        }
+                                    },
+                                    "php":{
+                                        "description": "Sucess create add php",
+                                        "value":{
+                                            "id":"2",
+                                            "name":"PHP",
+                                            "priority":"3",
+                                            "tags":[
+                                                "PHP",
+                                                "Laravel"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name":"params",
+                        "in":"path",
+                        "required": true,
+                        "description": "Update based on params or path",
+                        "schema":{
+                            "type":"string",
+                            "minLength": 1,
+                            "maxLength": 100
+                        },
+                        "examples": {
+                            "Java":{
+                                "description": "With id of 1 for Java",
+                                "value": "1"
+                            },
+                            "PHP":{
+                                "description": "With id of 2 for PHP",
+                                "value":"2"
+                            }
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "required": true,
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties": {
+                                    "name":{
+                                        "type":"string",
+                                        "minLength": 1,
+                                        "required": true
+                                    },
+                                    "todoList":{
+                                        "type":"string",
+                                        "minLength": 1
+                                    },
+                                    "priority":{
+                                        "type":"string",
+                                        "format": "int32",
+                                        "minLength": 1,
+                                        "default":1
+                                    },
+                                    "tags":{
+                                        "type":"array",
+                                        "items":{
+                                            "type":"string",
+                                            "minLength": 1
+                                        }
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Java":{
+                                    "description": "Change to Java",
+                                    "value":{
+                                        "name":"Java",
+                                        "tags":[
+                                            "Java",
+                                            "Spring"
+                                        ]
+                                    }
+                                },
+                                "Typescript":{
+                                    "description": "Change to Typescript",
+                                    "value":{
+                                        "name":"Typescript",
+                                        "tags":[
+                                            "Typescript",
+                                            "Hono"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+  }

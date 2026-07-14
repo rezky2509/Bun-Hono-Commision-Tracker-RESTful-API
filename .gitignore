@@ -1,0 +1,5 @@
+
+node_modules/
+.env
+src/database/seeder/currentAgent.json
+src/database/financial.db

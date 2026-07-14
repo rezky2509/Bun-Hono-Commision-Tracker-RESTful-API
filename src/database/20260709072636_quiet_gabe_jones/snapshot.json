@@ -1,0 +1,316 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "id": "423eb523-26b6-4065-bf31-6f7a06385d61",
+  "prevIds": [
+    "00000000-0000-0000-0000-000000000000"
+  ],
+  "ddl": [
+    {
+      "name": "agents",
+      "entityType": "tables"
+    },
+    {
+      "name": "payouts_discrepancies",
+      "entityType": "tables"
+    },
+    {
+      "name": "sales_transactions",
+      "entityType": "tables"
+    },
+    {
+      "name": "students",
+      "entityType": "tables"
+    },
+    {
+      "type": "text",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "id",
+      "entityType": "columns",
+      "table": "agents"
+    },
+    {
+      "type": "text(10)",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "agent_code",
+      "entityType": "columns",
+      "table": "agents"
+    },
+    {
+      "type": "text(255)",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "full_name",
+      "entityType": "columns",
+      "table": "agents"
+    },
+    {
+      "type": "text(20)",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "team_type",
+      "entityType": "columns",
+      "table": "agents"
+    },
+    {
+      "type": "text",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "id",
+      "entityType": "columns",
+      "table": "payouts_discrepancies"
+    },
+    {
+      "type": "text",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "transaction_id",
+      "entityType": "columns",
+      "table": "payouts_discrepancies"
+    },
+    {
+      "type": "real",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "calculated_commission",
+      "entityType": "columns",
+      "table": "payouts_discrepancies"
+    },
+    {
+      "type": "real",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "actual_amount_paid",
+      "entityType": "columns",
+      "table": "payouts_discrepancies"
+    },
+    {
+      "type": "real",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "variance_delta",
+      "entityType": "columns",
+      "table": "payouts_discrepancies"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "table": "payouts_discrepancies"
+    },
+    {
+      "type": "text",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "id",
+      "entityType": "columns",
+      "table": "sales_transactions"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "agent_id",
+      "entityType": "columns",
+      "table": "sales_transactions"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "student_id",
+      "entityType": "columns",
+      "table": "sales_transactions"
+    },
+    {
+      "type": "text",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "target_account",
+      "entityType": "columns",
+      "table": "sales_transactions"
+    },
+    {
+      "type": "real",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "gross_amount",
+      "entityType": "columns",
+      "table": "sales_transactions"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "transaction_date",
+      "entityType": "columns",
+      "table": "sales_transactions"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "table": "sales_transactions"
+    },
+    {
+      "type": "text",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "id",
+      "entityType": "columns",
+      "table": "students"
+    },
+    {
+      "type": "text(255)",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "full_name",
+      "entityType": "columns",
+      "table": "students"
+    },
+    {
+      "columns": [
+        "transaction_id"
+      ],
+      "tableTo": "sales_transactions",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "NO ACTION",
+      "nameExplicit": false,
+      "name": "fk_payouts_discrepancies_transaction_id_sales_transactions_id_fk",
+      "entityType": "fks",
+      "table": "payouts_discrepancies"
+    },
+    {
+      "columns": [
+        "agent_id"
+      ],
+      "tableTo": "agents",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "NO ACTION",
+      "nameExplicit": false,
+      "name": "fk_sales_transactions_agent_id_agents_id_fk",
+      "entityType": "fks",
+      "table": "sales_transactions"
+    },
+    {
+      "columns": [
+        "student_id"
+      ],
+      "tableTo": "students",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "NO ACTION",
+      "nameExplicit": false,
+      "name": "fk_sales_transactions_student_id_students_id_fk",
+      "entityType": "fks",
+      "table": "sales_transactions"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "agents_pk",
+      "table": "agents",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "payouts_discrepancies_pk",
+      "table": "payouts_discrepancies",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "sales_transactions_pk",
+      "table": "sales_transactions",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "students_pk",
+      "table": "students",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "agents_id_unique",
+      "entityType": "uniques",
+      "table": "agents"
+    },
+    {
+      "columns": [
+        "agent_code"
+      ],
+      "nameExplicit": false,
+      "name": "agents_agent_code_unique",
+      "entityType": "uniques",
+      "table": "agents"
+    }
+  ],
+  "renames": []
+}

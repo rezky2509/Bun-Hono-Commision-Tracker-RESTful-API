@@ -1,0 +1,30 @@
+{
+  "name": "n",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts",
+    "db:start": "docker-compose up -d",
+    "db:stop": "docker-compose stop",
+    "db:generate:migration": "bunx drizzle-kit generate",
+    "db:migrate": "bunx drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "db:seed:agent": "bun run src/database/seeder/agent-seeder.ts",
+    "db:seed:agent:reset": "bun run src/database/seeder/agent-seeder.ts reset"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.8.0",
+    "@libsql/client": "^0.17.4",
+    "better-auth": "^1.6.23",
+    "dotenv": "^17.4.2",
+    "drizzle-orm": "^1.0.0-rc.4",
+    "drizzle-seed": "^0.3.1",
+    "hono": "^4.12.27",
+    "pg": "^8.22.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@scalar/hono-api-reference": "^0.11.6",
+    "@types/bun": "latest",
+    "@types/pg": "^8.20.0",
+    "drizzle-kit": "^1.0.0-rc.4"
+  }
+}
