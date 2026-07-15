@@ -37,9 +37,10 @@ app.
     .route('/api/v1/',agentController)
     .route('/api/v1/',salesTransactionController)
     .route('/api/v1/',studentsController)
-    .get('/',async(c)=>{
-        return c.text('Hai from hono')
-    })
+    // No need
+    // .get('/',async(c)=>{
+    //     return c.text('Hai from hono')
+    // })
 
 
 // Cors Protection
