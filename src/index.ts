@@ -49,7 +49,7 @@ app.use('/api/auth/*',
     cors({
         origin: ['http://localhost:3060','http://localhost:3000'],
         allowHeaders: ["Content-Type", "Authorization"],
-        allowMethods: ["POST","GET"],
+        allowMethods: ["POST","GET","PATCH","UPDATE"],
         maxAge: 600,
         // Need to signup first
         credentials: true
