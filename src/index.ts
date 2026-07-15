@@ -2,12 +2,14 @@ import { Hono } from 'hono'
 // import { poolConnection } from './database/connection'
 // import { auth } from './utils/auth_postgresql'
 import { auth } from './utils/auth'
-import { agentController } from './controller/agent-controller'
 
 import {Scalar} from '@scalar/hono-api-reference'
 
 import {cors} from 'hono/cors'
 import { salesTransactionController } from './controller/sales-transcation-controller'
+import { studentsController } from './controller/students-controller'
+import { agentController } from './controller/agent-controller'
+
 
 const app = new Hono()
 
@@ -34,6 +36,7 @@ app.
     // You can chain the route definition
     .route('/api/v1/',agentController)
     .route('/api/v1/',salesTransactionController)
+    .route('/api/v1/',studentsController)
     .get('/',async(c)=>{
         return c.text('Hai from hono')
     })
