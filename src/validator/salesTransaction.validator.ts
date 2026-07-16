@@ -19,6 +19,7 @@ export const CREATE_SALES_SCHEMA = z.object({
 // Not using object because we only need as one string to receive 
 export const MONTH_VALIDATOR = z.string().regex(/^(0[1-9]|1[0-2])$/, "Invalid month format")
 export const YEAR_VALIDATOR = z.string().regex(/^\d{4}$/,'Invalid Year.')
+export const WEEK_VALIDATOR = z.string().regex(/^0[1-4]$/,'Invalid Week. Only 01 until 04')
 
 
 // Infer as zod validator

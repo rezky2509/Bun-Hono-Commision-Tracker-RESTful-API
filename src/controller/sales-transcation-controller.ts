@@ -4,7 +4,7 @@ import { HonoEnv } from "../types/types";
 
 import {authMiddleWare} from '../middleware/authentication-middleware'
 import { createSales, createSalesValidator, MONTH_VALIDATOR, YEAR_VALIDATOR } from "../validator/salesTransaction.validator";
-import { createNewSalesTransactions, getSalesTransaction } from "../service/salesTransactions.service";
+import { createNewSalesTransactions, getSalesTransaction, getSalesTransactionWeekly } from "../service/salesTransactions.service";
 
 
 export const salesTransactionController = new Hono<HonoEnv>()
@@ -60,7 +60,6 @@ salesTransactionController.get('/sales',async(c)=>{
     
 
     if(!month){
-        console.log('Months not exist')
         const result = await getSalesTransaction(pageParam)
         return c.json({
             result
@@ -68,9 +67,19 @@ salesTransactionController.get('/sales',async(c)=>{
     }
 
 
+    // Filters by Years, And Month. So every week 
+
+
     // If months exist, 
     const result = await getSalesTransaction(pageParam,month)
     return c.json({
         result
     },200)
+})
+
+
+salesTransactionController.get('/sales/weekly',async(c)=>{
+    const {year,month,week} = await c.req.query()
+    const result = await getSalesTransactionWeekly(year,month,week)
+    return c.json(result,200)
 })

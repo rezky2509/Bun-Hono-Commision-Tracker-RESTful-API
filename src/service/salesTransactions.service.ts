@@ -2,7 +2,7 @@
 import {db} from '../database/connection_sqlite'
 
 // Schema
-import { NewSalesTransaction } from '../types/types'
+import { NewSalesTransaction, SalesPerWeekResponse } from '../types/types'
 
 // Table Model 
 import { agentsTable, salesTransactions } from '../models/financial-management-schema'
@@ -122,5 +122,35 @@ export const getSalesTransaction = async(page:number, month?:string, year?:strin
         pageSize,
         totalPage: Math.ceil(totalRow/pageSize),
         totalData: totalRow
+    }
+}
+
+export const getSalesTransactionWeekly = async(year:string, month:string, week?:string) : Promise<SalesPerWeekResponse<NewSalesTransaction>>=>{
+    // console.log(`${year}-${month}`)
+    const filterInput = `${year}-${month}`
+    console.log(filterInput)
+    console.log(`Week is ${week}`)
+
+    // Go through Validation of the week, year and month
+    
+    const result = await db.select()
+    .from(salesTransactions)
+    .where(
+        sql`strftime('%Y-%m',datetime(${salesTransactions.transaction_date},'unixepoch')) = ${filterInput}
+            AND strftime('%W',datetime(${salesTransactions.transaction_date},'unixepoch')) = ${week}`
+    ).orderBy(desc(salesTransactions.transaction_date)).execute()
+
+    // unixepoch the date format stored on the database
+    if(!result.length){
+        return {
+            success: false,
+            status:"Not Found"
+        }
+    }
+
+    return {
+        success: true,
+        status: "Found",
+        data: result
     }
 }

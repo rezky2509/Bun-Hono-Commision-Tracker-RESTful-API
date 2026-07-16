@@ -39,6 +39,12 @@ export interface salesTranscation {
 }
 
 
+export interface SalesPerWeekResponse <T>{
+    success: boolean,
+    status: "Found" | "Not Found",
+    data?: T | T[]
+}
+
 // Hono TypeSaftety Environment Environment
 export type HonoEnv = {
     Variables:{
