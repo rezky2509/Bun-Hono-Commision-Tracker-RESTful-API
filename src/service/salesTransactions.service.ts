@@ -13,7 +13,7 @@ import { fetchAgentByName } from './agent.service'
 import { createSales } from '../validator/salesTransaction.validator'
 
 // Drizzle eq
-import { and, eq, like, sql } from 'drizzle-orm'
+import { and, desc, eq, like, sql } from 'drizzle-orm'
 
 export const createNewSalesTransactions = async(body:createSales):Promise<boolean> => {
     // Validation had been checked at Hono Middleware
@@ -106,7 +106,8 @@ export const getSalesTransaction = async(page:number, month?:string, year?:strin
     // If month exist or not null
     // push the object as spread operator
     // The spread operator (...) unpacks or "pours out" the contents of your array directly into the function arguments:
-    .where(and(...conditions))    
+    .where(and(...conditions))
+    .orderBy(desc(salesTransactions.created_at))    
     .limit(pageSize).offset((page-1)*pageSize)
 
     // counting based on month

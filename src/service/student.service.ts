@@ -36,8 +36,8 @@ export const checkCurrentStudent = async(studentName:string) =>{
 
 export const getAllStudents = async() => {
     const result = await db.select({
-        student_name: studentsTable.full_name,
-        student_id: studentsTable.id
+        name: studentsTable.full_name,
+        id: studentsTable.id
     }).from(studentsTable)
 
     return result

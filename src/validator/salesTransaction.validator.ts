@@ -7,7 +7,7 @@ import {z} from 'zod'
 
 export const CREATE_SALES_SCHEMA = z.object({
     student_name: z.string().min(5,"5 Character minimum for student name"),
-    agent_name: z.string().min(5,"5 Character minimum for agent name"),
+    agent_name: z.string().min(2,"5 Character minimum for agent name"),
     agent_code:  z.string().min(1,"1 Character minimum for agent code"),
     // Need to update to support format DD/MM/YYYY
     transaction_date: z.coerce.date(),
@@ -22,12 +22,14 @@ export const YEAR_VALIDATOR = z.string().regex(/^\d{4}$/,'Invalid Year.')
 
 
 // Infer as zod validator
+// Still Return Null
 export const createSalesValidator = zValidator('json',CREATE_SALES_SCHEMA,
     (result,context)=>{
         // if the parsing failed
         if(!result.success){
             console.log('The error')
             // Bug on the Error Collector sending as Null 
+            console.log(result.error.issues)
             return context.json({
                 error: result.error.issues.map((error)=>
                     // When using arrow functions with curly braces, you need an explicit return statement.

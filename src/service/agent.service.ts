@@ -3,15 +3,20 @@ import { NewAgents } from "../types/types";
 import { db } from "../database/connection_sqlite";
 // The TS schema
 import { agentsTable } from "../models/financial-management-schema";
-import { and, count, eq, ilike, like, name } from "drizzle-orm";
+import { and, count, eq, ilike, like, name,getColumns } from "drizzle-orm";
 
 // Filters
 import { asc,sql } from "drizzle-orm";
 
 
 export const fetchAgents = async()=> {
-
-    const result = await db.select().from(agentsTable)
+    // getColumns() helper function to retrieve all columns
+    // const { id, ...rest } = getColumns(agentsTable);
+    const result = await db.select({
+        id: agentsTable.agent_code,
+        name:agentsTable.full_name
+    }
+    ).from(agentsTable)
     if(result.length===0){
         return "No Agent Found"
     }
@@ -40,6 +45,9 @@ export const paginateResult = async(page:number)  => {
 }
 
 export const fetchAgentByName = async(nameQuery:string,agentCode?:string)=>{
+    // Desctructure to exclude field id     
+
+
     const result = await db.select().from(agentsTable)
     .where(
         agentCode ? 
